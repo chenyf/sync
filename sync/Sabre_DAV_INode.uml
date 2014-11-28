@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>\Sabre\DAV\INode</OriginalElement>
+  <nodes>
+    <node x="907.0666666666666" y="1236.0">\Sabre\DAVACL\PrincipalCollection</node>
+    <node x="0.0" y="240.5">\Sabre\DAVACL\IPrincipalCollection</node>
+    <node x="50.0" y="1647.0">\Sabre\DAV\ObjectTree</node>
+    <node x="1288.0" y="217.5">\Sabre\DAV\Node</node>
+    <node x="0.0" y="1382.0">\Sabre\DAV\Tree</node>
+    <node x="680.0" y="183.0">\Sabre\DAVACL\IPrincipal</node>
+    <node x="1892.0" y="194.5">\Sabre\DAV\IFile</node>
+    <node x="350.0" y="229.0">\Sabre\DAV\IProperties</node>
+    <node x="605.0666666666666" y="1189.0">\Sabre\CardDAV\AddressBookRoot</node>
+    <node x="1052.0" y="0.0">\Sabre\DAV\INode</node>
+    <node x="1839.5" y="541.0">\Sabre\DAV\File</node>
+    <node x="1441.0" y="552.5">\Sabre\DAV\Collection</node>
+    <node x="643.3619047619047" y="402.0">\Sabre\DAVACL\Principal</node>
+    <node x="1034.0" y="194.5">\Sabre\DAVACL\IACL</node>
+    <node x="1558.0" y="194.5">\Sabre\DAV\ICollection</node>
+    <node x="764.0666666666666" y="876.0">\Sabre\DAVACL\AbstractPrincipalCollection</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\Sabre\DAVACL\PrincipalCollection" target="\Sabre\DAVACL\AbstractPrincipalCollection">
+      <point x="0.0" y="-27.0" />
+      <point x="1068.0666666666666" y="1164.0" />
+      <point x="978.5666666666666" y="1164.0" />
+      <point x="71.5" y="131.5" />
+    </edge>
+    <edge source="\Sabre\CardDAV\AddressBookRoot" target="\Sabre\DAVACL\AbstractPrincipalCollection">
+      <point x="0.0" y="-74.0" />
+      <point x="746.0666666666666" y="1164.0" />
+      <point x="835.5666666666666" y="1164.0" />
+      <point x="-71.5" y="131.5" />
+    </edge>
+    <edge source="\Sabre\DAV\ICollection" target="\Sabre\DAV\INode">
+      <point x="0.0" y="-73.0" />
+      <point x="1715.0" y="153.0" />
+      <point x="1207.5714285714287" y="153.0" />
+      <point x="56.57142857142867" y="61.5" />
+    </edge>
+    <edge source="\Sabre\DAV\File" target="\Sabre\DAV\IFile">
+      <point x="52.5" y="-73.0" />
+      <point x="0.0" y="73.0" />
+    </edge>
+    <edge source="\Sabre\DAVACL\IPrincipal" target="\Sabre\DAV\INode">
+      <point x="0.0" y="-84.5" />
+      <point x="847.0" y="163.0" />
+      <point x="1122.7142857142858" y="163.0" />
+      <point x="-28.28571428571422" y="61.5" />
+    </edge>
+    <edge source="\Sabre\DAVACL\Principal" target="\Sabre\DAVACL\IACL">
+      <point x="68.25" y="-212.0" />
+      <point x="984.6119047619047" y="372.0" />
+      <point x="1151.0" y="372.0" />
+      <point x="0.0" y="73.0" />
+    </edge>
+    <edge source="\Sabre\DAVACL\AbstractPrincipalCollection" target="\Sabre\DAV\Collection">
+      <point x="71.5" y="-131.5" />
+      <point x="978.5666666666666" y="851.0" />
+      <point x="1564.0" y="851.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+    <edge source="\Sabre\DAVACL\IACL" target="\Sabre\DAV\INode">
+      <point x="0.0" y="-73.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+    <edge source="\Sabre\DAV\ObjectTree" target="\Sabre\DAV\Tree">
+      <point x="0.0" y="-97.0" />
+      <point x="0.0" y="107.5" />
+    </edge>
+    <edge source="\Sabre\DAVACL\Principal" target="\Sabre\DAV\Node">
+      <point x="204.75" y="-212.0" />
+      <point x="1121.1119047619047" y="382.0" />
+      <point x="1329.6666666666667" y="382.0" />
+      <point x="-83.33333333333326" y="50.0" />
+    </edge>
+    <edge source="\Sabre\DAV\Collection" target="\Sabre\DAV\ICollection">
+      <point x="61.5" y="-61.5" />
+      <point x="1625.5" y="382.0" />
+      <point x="1715.0" y="382.0" />
+      <point x="0.0" y="73.0" />
+    </edge>
+    <edge source="\Sabre\DAVACL\Principal" target="\Sabre\DAVACL\IPrincipal">
+      <point x="-68.25" y="-212.0" />
+      <point x="848.1119047619047" y="382.0" />
+      <point x="847.0" y="382.0" />
+      <point x="0.0" y="84.5" />
+    </edge>
+    <edge source="\Sabre\DAVACL\Principal" target="\Sabre\DAV\IProperties">
+      <point x="-204.75" y="-212.0" />
+      <point x="711.6119047619047" y="382.0" />
+      <point x="505.0" y="382.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="\Sabre\DAVACL\AbstractPrincipalCollection" target="\Sabre\DAVACL\IPrincipalCollection">
+      <point x="-71.5" y="-131.5" />
+      <point x="835.5666666666666" y="851.0" />
+      <point x="165.0" y="851.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="\Sabre\DAV\IFile" target="\Sabre\DAV\INode">
+      <point x="0.0" y="-73.0" />
+      <point x="1997.0" y="143.0" />
+      <point x="1235.857142857143" y="143.0" />
+      <point x="84.85714285714289" y="61.5" />
+    </edge>
+    <edge source="\Sabre\DAV\File" target="\Sabre\DAV\Node">
+      <point x="-52.5" y="-73.0" />
+      <point x="1892.0" y="372.0" />
+      <point x="1496.3333333333333" y="372.0" />
+      <point x="83.33333333333326" y="50.0" />
+    </edge>
+    <edge source="\Sabre\DAV\IProperties" target="\Sabre\DAV\INode">
+      <point x="0.0" y="-38.5" />
+      <point x="505.0" y="153.0" />
+      <point x="1094.4285714285713" y="153.0" />
+      <point x="-56.57142857142867" y="61.5" />
+    </edge>
+    <edge source="\Sabre\DAV\Node" target="\Sabre\DAV\INode">
+      <point x="0.0" y="-50.0" />
+      <point x="1413.0" y="163.0" />
+      <point x="1179.2857142857142" y="163.0" />
+      <point x="28.28571428571422" y="61.5" />
+    </edge>
+    <edge source="\Sabre\DAVACL\IPrincipalCollection" target="\Sabre\DAV\INode">
+      <point x="0.0" y="-27.0" />
+      <point x="165.0" y="143.0" />
+      <point x="1066.142857142857" y="143.0" />
+      <point x="-84.85714285714289" y="61.5" />
+    </edge>
+    <edge source="\Sabre\DAV\Collection" target="\Sabre\DAV\Node">
+      <point x="-61.5" y="-61.5" />
+      <point x="1502.5" y="382.0" />
+      <point x="1413.0" y="382.0" />
+      <point x="0.0" y="50.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="923.5" y="785.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Constants</Category>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<d:multistatus xmlns:d="DAV:" xmlns:s="http://sabredav.org/ns" xmlns:card="urn:ietf:params:xml:ns:carddav">
+    <d:response>
+        <d:href>/file.php/principals/</d:href>
+        <d:propstat>
+            <d:prop>
+                <d:resourcetype>
+                    <d:collection/>
+                </d:resourcetype>
+                <d:supported-report-set>
+                    <d:supported-report>
+                        <d:report>
+                            <d:expand-property/>
+                        </d:report>
+                    </d:supported-report>
+                    <d:supported-report>
+                        <d:report>
+                            <d:principal-property-search/>
+                        </d:report>
+                    </d:supported-report>
+                    <d:supported-report>
+                        <d:report>
+                            <d:principal-search-property-set/>
+                        </d:report>
+                    </d:supported-report>
+                </d:supported-report-set>
+            </d:prop>
+            <d:status>HTTP/1.1 200 OK</d:status>
+        </d:propstat>
+    </d:response>
+    <d:response>
+        <d:href>/file.php/principals/hwang</d:href>
+        <d:propstat>
+            <d:prop>
+                <d:getetag/>
+                <d:displayname/>
+                <d:resourcetype/>
+                <x3:supported-calendar-component-set xmlns:x3="urn:ietf:params:xml:ns:caldav"/>
+                <card:supported-address-data/>
+                <x4:xmpp-uri xmlns:x4="http://calendarserver.org/ns/"/>
+                <x5:calendar-color xmlns:x5="http://apple.com/ns/ical/"/>
+                <d:supported-report-set/>
+            </d:prop>
+            <d:status>HTTP/1.1 403 Forbidden</d:status>
+        </d:propstat>
+    </d:response>
+    <d:response>
+        <d:href>/file.php/principals/aaaa/</d:href>
+        <d:propstat>
+            <d:prop>
+                <d:displayname>aaaa</d:displayname>
+                <d:resourcetype>
+                    <d:principal/>
+                </d:resourcetype>
+                <d:supported-report-set>
+                    <d:supported-report>
+                        <d:report>
+                            <d:expand-property/>
+                        </d:report>
+                    </d:supported-report>
+                    <d:supported-report>
+                        <d:report>
+                            <d:principal-property-search/>
+                        </d:report>
+                    </d:supported-report>
+                    <d:supported-report>
+                        <d:report>
+                            <d:principal-search-property-set/>
+                        </d:report>
+                    </d:supported-report>
+                </d:supported-report-set>
+            </d:prop>
+            <d:status>HTTP/1.1 200 OK</d:status>
+        </d:propstat>
+    </d:response>
+    <d:response>
+        <d:href>/file.php/principals/test1</d:href>
+        <d:propstat>
+            <d:prop>
+                <d:getetag/>
+                <d:displayname/>
+                <d:resourcetype/>
+                <x3:supported-calendar-component-set xmlns:x3="urn:ietf:params:xml:ns:caldav"/>
+                <card:supported-address-data/>
+                <x4:xmpp-uri xmlns:x4="http://calendarserver.org/ns/"/>
+                <x5:calendar-color xmlns:x5="http://apple.com/ns/ical/"/>
+                <d:supported-report-set/>
+            </d:prop>
+            <d:status>HTTP/1.1 403 Forbidden</d:status>
+        </d:propstat>
+    </d:response>
+</d:multistatus>
