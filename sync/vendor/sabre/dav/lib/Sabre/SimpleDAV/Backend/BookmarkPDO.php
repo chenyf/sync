@@ -99,39 +99,25 @@ class PDO extends AbstractBackend {
 
         $fields = array_values($this->propertyMap);
         $fields[] = 'id';
-        $fields[] = 'uri';
-        $fields[] = 'ctag';
-        $fields[] = 'components';
         $fields[] = 'principaluri';
-        $fields[] = 'transparent';
+        $fields[] = 'ctag';
+        $fields[] = 'data';
 
         // Making fields a comma-delimited list
         $fields = implode(', ', $fields);
-        $stmt = $this->pdo->prepare("SELECT " . $fields . " FROM ".$this->resourceTableName." WHERE principaluri = ? ORDER BY calendarorder ASC");
+        $stmt = $this->pdo->prepare("SELECT " . $fields . " FROM ".$this->resourceTableName." WHERE principaluri = ? ");
         $stmt->execute(array($principalUri));
 
-        $calendars = array();
+        $resources = array();
         while($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-
-            $components = array();
-            if ($row['components']) {
-                $components = explode(',',$row['components']);
-            }
-
-            $calendar = array(
+            $resource = array(
                 'id' => $row['id'],
-                'uri' => $row['uri'],
                 'principaluri' => $row['principaluri'],
-                '{' . CalDAV\Plugin::NS_CALENDARSERVER . '}getctag' => $row['ctag']?$row['ctag']:'0',
-                '{' . CalDAV\Plugin::NS_CALDAV . '}supported-calendar-component-set' => new CalDAV\Property\SupportedCalendarComponentSet($components),
-                '{' . CalDAV\Plugin::NS_CALDAV . '}schedule-calendar-transp' => new CalDAV\Property\ScheduleCalendarTransp($row['transparent']?'transparent':'opaque'),
+                'data' => $row['data'],
             );
-            foreach($this->propertyMap as $xmlName=>$dbName) {
-                $calendar[$xmlName] = $row[$dbName];
-            }
-            $calendars[] = $calendar;
+            $resources[] = $resource;
         }
-        return $calendars;
+        return $resources;
     }
 
     /**
@@ -302,7 +288,7 @@ class PDO extends AbstractBackend {
      */
     public function deleteResource($calendarId) {
 
-        $stmt = $this->pdo->prepare('DELETE FROM '.$this->resourceObjectTableName.' WHERE calendarid = ?');
+        $stmt = $this->pdo->prepare('DELETE FROM '.$this->resourceObjectTableName.' WHERE resid = ?');
         $stmt->execute(array($calendarId));
 
         $stmt = $this->pdo->prepare('DELETE FROM '.$this->resourceTableName.' WHERE id = ?');
