@@ -76,13 +76,23 @@ class URLUtil {
     static function decodePathSegment($path) {
 
         $path = rawurldecode($path);
-        $encoding = mb_detect_encoding($path, array('UTF-8','ISO-8859-1'));
+        /*$encoding = mb_detect_encoding($path, array('UTF-8','ISO-8859-1'));
 
         switch($encoding) {
 
             case 'ISO-8859-1' :
                 $path = utf8_encode($path);
 
+        }*/
+        // zhou modify with PHP 5.3.3
+        $encoding = "UTF-8";
+        $sample = iconv("ISO-8859-1", "ISO-8859-1", $path);
+        if (md5($sample) == md5($path)) { 
+            $encoding = "ISO-8859-1'"; 
+        }
+
+        if ($encoding == "ISO-8859-1") {
+            $path = utf8_encode($path);
         }
 
         return $path;

@@ -1575,6 +1575,10 @@ class Server {
                         }
                         break;
 
+                    case '{urn:ietf:params:xml:ns:webdav}note-data' : if ($node instanceof IFile && $data = $node->get()) $newProperties[200]['{urn:ietf:params:xml:ns:webdav}note-data'] = $data; break;
+                    
+                    case '{urn:ietf:params:xml:ns:webdav}bookmark-data' : if ($node instanceof IFile && $data = $node->get()) $newProperties[200]['{urn:ietf:params:xml:ns:webdav}bookmark-data'] = $data; break;
+
                 }
 
                 // If we were unable to find the property, we will list it as 404.
