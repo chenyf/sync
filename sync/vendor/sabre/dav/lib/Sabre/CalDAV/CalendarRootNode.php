@@ -22,6 +22,8 @@ class CalendarRootNode extends \Sabre\DAVACL\AbstractPrincipalCollection {
      * @var Sabre\CalDAV\Backend\BackendInterface
      */
     protected $caldavBackend;
+    
+    protected $uid;
 
     /**
      * Constructor
@@ -41,6 +43,7 @@ class CalendarRootNode extends \Sabre\DAVACL\AbstractPrincipalCollection {
 
         parent::__construct($principalBackend, $principalPrefix);
         $this->caldavBackend = $caldavBackend;
+        $this->uid = $uid;
 
     }
 
@@ -70,8 +73,11 @@ class CalendarRootNode extends \Sabre\DAVACL\AbstractPrincipalCollection {
      */
     public function getChildForPrincipal(array $principal) {
 
-        return new UserCalendars($this->caldavBackend, $principal);
+        return new UserCalendars($this->caldavBackend, $principal, $this->uid);
 
     }
 
+    public function setUid($uid) {
+        $this->uid = $uid;
+    }
 }

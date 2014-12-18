@@ -153,19 +153,21 @@ class PDO extends AbstractBackend {
      * @param array $properties
      * @return string
      */
-    public function createCalendar($principalUri, $calendarUri, array $properties) {
+    public function createCalendar($principalUri, $calendarUri, array $properties, $uid) {
 
         $fieldNames = array(
             'principaluri',
             'uri',
             'ctag',
             'transparent',
+            'uid',
         );
         $values = array(
             ':principaluri' => $principalUri,
             ':uri'          => $calendarUri,
             ':ctag'         => 1,
             ':transparent'  => 0,
+            ':uid'          => $uid,
         );
 
         // Default value

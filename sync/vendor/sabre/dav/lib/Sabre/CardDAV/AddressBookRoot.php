@@ -28,6 +28,8 @@ class AddressBookRoot extends DAVACL\AbstractPrincipalCollection {
      * @var Backend\BackendInterface
      */
     protected $carddavBackend;
+    
+    protected $uid;
 
     /**
      * Constructor
@@ -46,6 +48,7 @@ class AddressBookRoot extends DAVACL\AbstractPrincipalCollection {
     public function __construct(DAVACL\PrincipalBackend\BackendInterface $principalBackend,Backend\BackendInterface $carddavBackend, $principalPrefix = 'principals') {
 
         $this->carddavBackend = $carddavBackend;
+        $this->uid = null;
         parent::__construct($principalBackend, $principalPrefix);
 
     }
@@ -73,8 +76,11 @@ class AddressBookRoot extends DAVACL\AbstractPrincipalCollection {
      */
     public function getChildForPrincipal(array $principal) {
 
-        return new UserAddressBooks($this->carddavBackend, $principal['uri']);
+        return new UserAddressBooks($this->carddavBackend, $principal['uri'], $this->uid);
 
     }
 
+    public function setUid($uid) {
+        $this->uid = $uid;
+    }
 }

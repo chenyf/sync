@@ -141,13 +141,14 @@ class PDO extends AbstractBackend {
      * @param array $properties
      * @return void
      */
-    public function createAddressBook($principalUri, $url, array $properties) {
+    public function createAddressBook($principalUri, $url, array $properties, $uid) {
 
         $values = array(
             'displayname' => null,
             'description' => null,
             'principaluri' => $principalUri,
             'uri' => $url,
+            'uid' => $uid,
         );
 
         foreach($properties as $property=>$newValue) {
@@ -165,7 +166,7 @@ class PDO extends AbstractBackend {
 
         }
 
-        $query = 'INSERT INTO ' . $this->addressBooksTableName . ' (uri, displayname, description, principaluri, ctag) VALUES (:uri, :displayname, :description, :principaluri, 1)';
+        $query = 'INSERT INTO ' . $this->addressBooksTableName . ' (uri, displayname, description, principaluri, ctag, uid) VALUES (:uri, :displayname, :description, :principaluri, 1, :uid)';
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($values);
 
