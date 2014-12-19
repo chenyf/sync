@@ -42,10 +42,11 @@ class UserCalendars implements DAV\IExtendedCollection, DAVACL\IACL {
      * @param Backend\BackendInterface $caldavBackend
      * @param mixed $userUri
      */
-    public function __construct(Backend\BackendInterface $caldavBackend, $principalInfo) {
+    public function __construct(Backend\BackendInterface $caldavBackend, $principalInfo, $uid) {
 
         $this->caldavBackend = $caldavBackend;
         $this->principalInfo = $principalInfo;
+        $this->uid = $uid;
 
     }
 
@@ -221,7 +222,7 @@ class UserCalendars implements DAV\IExtendedCollection, DAVACL\IACL {
         if (!$isCalendar) {
             throw new DAV\Exception\InvalidResourceType('You can only create calendars in this collection');
         }
-        $this->caldavBackend->createCalendar($this->principalInfo['uri'], $name, $properties);
+        $this->caldavBackend->createCalendar($this->principalInfo['uri'], $name, $properties, $this->uid);
 
     }
 

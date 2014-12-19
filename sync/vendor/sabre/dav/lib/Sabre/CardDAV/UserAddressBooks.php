@@ -40,10 +40,11 @@ class UserAddressBooks extends DAV\Collection implements DAV\IExtendedCollection
      * @param Backend\BackendInterface $carddavBackend
      * @param string $principalUri
      */
-    public function __construct(Backend\BackendInterface $carddavBackend, $principalUri) {
+    public function __construct(Backend\BackendInterface $carddavBackend, $principalUri, $uid) {
 
         $this->carddavBackend = $carddavBackend;
         $this->principalUri = $principalUri;
+        $this->uid = $uid;
 
     }
 
@@ -176,7 +177,7 @@ class UserAddressBooks extends DAV\Collection implements DAV\IExtendedCollection
         if (!in_array('{'.Plugin::NS_CARDDAV.'}addressbook',$resourceType) || count($resourceType)!==2) {
             throw new DAV\Exception\InvalidResourceType('Unknown resourceType for this collection');
         }
-        $this->carddavBackend->createAddressBook($this->principalUri, $name, $properties);
+        $this->carddavBackend->createAddressBook($this->principalUri, $name, $properties, $this->uid);
 
     }
 

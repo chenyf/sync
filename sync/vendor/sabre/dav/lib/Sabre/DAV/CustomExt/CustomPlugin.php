@@ -25,13 +25,18 @@ class CustomPlugin extends DAV\ServerPlugin {
     public function beforeMethod($method, $uri) { 
         
         $token = $this->server->httpRequest->getHeader("token");
+
         $r = DAV\CurlUtil::get("http://api.sso.letv.com/api/checkTicket/tk/".$token);
         if ($r) {
             $result = json_decode($r, $assoc = true);
             if ($result["status"] == 1) {
                 $uid = $result["bean"]["result"];
                 $this->server->tree->getNodeForPath("/")->setRootNodeAttr($uid);
+            } else {
+                throw new DAV\Exception\NotAuthenticated('make sure user has logined');
             }
+        } else {
+            throw new DAV\Exception\NotAuthenticated('failed to check token');
         }
 
         return true;
