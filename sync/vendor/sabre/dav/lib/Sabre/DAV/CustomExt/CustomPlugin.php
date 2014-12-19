@@ -7,7 +7,6 @@ use Sabre\DAV;
 class CustomPlugin extends DAV\ServerPlugin {
 
     const NS_DAV = "urn:ietf:params:xml:ns:webdav";
-
     protected $server;
 
     public function __construct() {
@@ -15,17 +14,13 @@ class CustomPlugin extends DAV\ServerPlugin {
     }
 
     public function initialize(DAV\Server $server) {
-
         $this->server = $server;
         $this->server->subscribeEvent('beforeMethod',array($this, 'beforeMethod'));
         $this->server->subscribeEvent('report',array($this, 'report'));
-        
     }
 
     public function beforeMethod($method, $uri) { 
-        
         $token = $this->server->httpRequest->getHeader("token");
-
         $r = DAV\CurlUtil::get("http://api.sso.letv.com/api/checkTicket/tk/".$token);
         if ($r) {
             $result = json_decode($r, $assoc = true);
@@ -38,17 +33,13 @@ class CustomPlugin extends DAV\ServerPlugin {
         } else {
             throw new DAV\Exception\NotAuthenticated('failed to check token');
         }
-
         return true;
-
     }
 
     public function report($reportName, $dom, $uri) {
-
         $pattern = "/{".self::NS_DAV."}.*-multiget/";
         if (preg_match($pattern, $reportName)) {
             $properties = array_keys(DAV\XMLUtil::parseProperties($dom->firstChild));
-    
             $hrefElems = $dom->getElementsByTagNameNS('urn:DAV','href');
             $propertyList = array();
     
@@ -64,8 +55,6 @@ class CustomPlugin extends DAV\ServerPlugin {
             $this->server->httpResponse->sendBody($this->server->generateMultiStatus($propertyList, $prefer['return-minimal']));
             return false;
         }
-
         return true;
-
     }
 }

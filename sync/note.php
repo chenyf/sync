@@ -1,6 +1,5 @@
 <?php
 
-
 define("BAIKAL_CONTEXT", TRUE);
 define("PROJECT_CONTEXT_BASEURI", "/");
 
@@ -24,16 +23,11 @@ require PROJECT_PATH_ROOT . 'vendor/autoload.php';
 # Bootstrapping Baïkal
 \Baikal\Framework::bootstrap();
 
-$noteBackend = new \Sabre\DAV\CustomExt\NoteExt\PDO($GLOBALS["DB"]->getPDO());
-
-$rootNode = new \Sabre\DAV\CustomExt\NoteExt\Note($noteBackend);  
-
+$backend = new \Sabre\DAV\CustomExt\NoteExt\PDO($GLOBALS["DB"]->getPDO());
+$rootNode = new \Sabre\DAV\CustomExt\NoteExt\Note($backend);  
 $server = new \Sabre\DAV\Server($rootNode);
-
 $server->setBaseUri('/sync/note/');
-
 $server->addPlugin(new \Sabre\DAV\CustomExt\NoteExt\Plugin());
-
 $server->exec();
 
 ?>
