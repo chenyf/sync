@@ -23,11 +23,11 @@ require PROJECT_PATH_ROOT . 'vendor/autoload.php';
 # Bootstrapping Baïkal
 \Baikal\Framework::bootstrap();
 
-$backend = new \Sabre\DAV\CustomExt\BookmarkExt\PDO($GLOBALS["DB"]->getPDO());
-$rootNode = new \Sabre\DAV\CustomExt\BookmarkExt\Bookmark($backend);  
+$backend = new \Sabre\SimpleDAV\Bookmark\PDO($GLOBALS["DB"]->getPDO());
+$rootNode = new \Sabre\SimpleDAV\Bookmark\Bookmark($backend);  
 $server = new \Sabre\DAV\Server($rootNode);
 $server->setBaseUri('/sync/bookmark/');
-$server->addPlugin(new \Sabre\DAV\CustomExt\BookmarkExt\Plugin());
+$server->addPlugin(new \Sabre\SimpleDAV\Bookmark\Plugin());
 $server->exec();
 
 ?>

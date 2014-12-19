@@ -23,11 +23,11 @@ require PROJECT_PATH_ROOT . 'vendor/autoload.php';
 # Bootstrapping Baïkal
 \Baikal\Framework::bootstrap();
 
-$backend = new \Sabre\DAV\CustomExt\NoteExt\PDO($GLOBALS["DB"]->getPDO());
-$rootNode = new \Sabre\DAV\CustomExt\NoteExt\Note($backend);  
+$backend = new \Sabre\SimpleDAV\Note\PDO($GLOBALS["DB"]->getPDO());
+$rootNode = new \Sabre\SimpleDAV\Note\Note($backend);  
 $server = new \Sabre\DAV\Server($rootNode);
 $server->setBaseUri('/sync/note/');
-$server->addPlugin(new \Sabre\DAV\CustomExt\NoteExt\Plugin());
+$server->addPlugin(new \Sabre\SimpleDAV\Note\Plugin());
 $server->exec();
 
 ?>
