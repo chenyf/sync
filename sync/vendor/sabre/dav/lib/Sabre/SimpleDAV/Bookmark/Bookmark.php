@@ -1,9 +1,9 @@
 <?php
 
-namespace Sabre\DAV\CustomExt\BookmarkExt;
+namespace Sabre\SimpleDAV\Bookmark;
 
-use Sabre\DAV\CustomExt\Backend;
 use Sabre\DAV;
+use Sabre\SimpleDAV\Backend;
 
 class Bookmark extends DAV\Node implements DAV\ICollection {
 

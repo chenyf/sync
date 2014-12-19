@@ -1,6 +1,6 @@
 <?php
 
-namespace Sabre\DAV\CustomExt\BookmarkExt;
+namespace Sabre\SimpleDAV\Bookmark;
 
 use Sabre\DAV;
 

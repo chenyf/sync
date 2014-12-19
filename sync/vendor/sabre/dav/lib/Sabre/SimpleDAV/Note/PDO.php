@@ -1,8 +1,8 @@
 <?php
 
-namespace Sabre\DAV\CustomExt\NoteExt;
+namespace Sabre\SimpleDAV\Note;
 
-use Sabre\DAV\CustomExt\Backend;
+use Sabre\SimpleDAV\Backend;
 
 class PDO extends Backend\AbstractBackend {
 
@@ -31,11 +31,9 @@ class PDO extends Backend\AbstractBackend {
      * @param string $noteItemTableName
      */
     public function __construct(\PDO $pdo, $notesTableName = 'Notes', $noteItemTableName = 'NoteItem') {
-
         $this->pdo = $pdo;
         $this->notesTableName = $notesTableName;
         $this->noteItemTableName = $noteItemTableName;
-
     }
 
     public function getNote($uid) {
@@ -107,5 +105,4 @@ class PDO extends Backend\AbstractBackend {
         $stmt = $this->pdo->prepare('DELETE FROM '.$this->noteItemTableName.' WHERE uri = :uri and noteid = :noteid');
         $stmt->execute($values);
     }
-
 }

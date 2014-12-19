@@ -1,13 +1,13 @@
 <?php
 
-namespace Sabre\DAV\CustomExt\NoteExt;
+namespace Sabre\SimpleDAV\Note;
 
 use Sabre\DAV;
 
 class NoteItem extends DAV\Node implements DAV\IFile {
 
     public function __construct(array $ctx) {
-        $this->noteBackend = $ctx["noteBackend"];
+        $this->backend = $ctx["backend"];
         $this->noteid = $ctx["noteid"];
         $this->name = $ctx["name"];
     }
@@ -20,22 +20,20 @@ class NoteItem extends DAV\Node implements DAV\IFile {
         if (is_resource($data)) {
             $data = stream_get_contents($data); 
         }
-        return $this->noteBackend->updateNoteItem($this->noteid, $this->getName(), $data); 
+        return $this->backend->updateNoteItem($this->noteid, $this->getName(), $data); 
     }
 
     public function get() {
-        $result = $this->noteBackend->getNoteItem($this->noteid, $this->getName());
+        $result = $this->backend->getNoteItem($this->noteid, $this->getName());
         return $result['data'];
     }
 
     public function delete() {
-        $this->noteBackend->removeNoteItem($this->noteid, $this->getName()); 
+        $this->backend->removeNoteItem($this->noteid, $this->getName()); 
     }
 
     public function getSize() {
-
         return null;
-
     }
 
     public function getETag() {
@@ -48,10 +46,7 @@ class NoteItem extends DAV\Node implements DAV\IFile {
     }
 
     public function getContentType() {
-
         return null;
-
     }
-
 }
 

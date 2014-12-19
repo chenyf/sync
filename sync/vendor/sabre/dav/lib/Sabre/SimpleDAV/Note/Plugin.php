@@ -1,10 +1,10 @@
 <?php
 
-namespace Sabre\DAV\CustomExt\NoteExt;
+namespace Sabre\SimpleDAV\Note;
 
-use Sabre\DAV\CustomExt;
 use Sabre\DAV;
+use Sabre\SimpleDAV;
 
-class Plugin extends CustomExt\CustomPlugin {
+class Plugin extends SimpleDAV\Plugin {
 
 }

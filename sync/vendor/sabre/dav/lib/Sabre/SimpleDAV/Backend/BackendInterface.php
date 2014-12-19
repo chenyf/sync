@@ -1,6 +1,6 @@
 <?php
 
-namespace Sabre\DAV\CustomExt\Backend;
+namespace Sabre\SimpleDAV\Backend;
 
 interface BackendInterface {
 

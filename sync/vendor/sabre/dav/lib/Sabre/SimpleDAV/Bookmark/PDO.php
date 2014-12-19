@@ -1,8 +1,8 @@
 <?php
 
-namespace Sabre\DAV\CustomExt\BookmarkExt;
+namespace Sabre\SimpleDAV\Bookmark;
 
-use Sabre\DAV\CustomExt\Backend;
+use Sabre\SimpleDAV\Backend;
 
 class PDO extends Backend\AbstractBackend {
 

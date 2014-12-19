@@ -1,16 +1,15 @@
 <?php
 
-namespace Sabre\DAV\CustomExt;
+namespace Sabre\SimpleDAV;
 
 use Sabre\DAV;
 
-class CustomPlugin extends DAV\ServerPlugin {
+class Plugin extends DAV\ServerPlugin {
 
     const NS_DAV = "urn:ietf:params:xml:ns:webdav";
     protected $server;
 
     public function __construct() {
-    
     }
 
     public function initialize(DAV\Server $server) {
