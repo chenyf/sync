@@ -28,8 +28,6 @@ class AddressBookRoot extends DAVACL\AbstractPrincipalCollection {
      * @var Backend\BackendInterface
      */
     protected $carddavBackend;
-    
-    protected $uid;
 
     /**
      * Constructor

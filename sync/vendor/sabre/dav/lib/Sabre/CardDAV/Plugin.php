@@ -51,6 +51,7 @@ class Plugin extends DAV\ServerPlugin {
     public function initialize(DAV\Server $server) {
 
         /* Events */
+        $server->subscribeEvent('beforeMethod', array($this,'beforeMethod'));
         $server->subscribeEvent('beforeGetProperties', array($this, 'beforeGetProperties'));
         $server->subscribeEvent('afterGetProperties',  array($this, 'afterGetProperties'));
         $server->subscribeEvent('updateProperties', array($this, 'updateProperties'));
@@ -715,23 +716,11 @@ class Plugin extends DAV\ServerPlugin {
 
     }
 
-    public function beforeMethod($method, $uri) {
-
-        $token = $this->server->httpRequest->getHeader("token");
-        
-        $r = DAV\CurlUtil::get("http://api.sso.letv.com/api/checkTicket/tk/".$token);
-        if ($r) {
-            $result = json_decode($r, $assoc = true);
-            if ($result["status"] == 1) {
-                $uid = $result["bean"]["result"];
-                $this->server->tree->getNodeForPath("")->setUid($uid);
-            } else {
-                throw new DAV\Exception\NotAuthenticated('make sure user has logined');
-            }
-        } else {
-            throw new DAV\Exception\NotAuthenticated('failed to check token');
+    public function beforeMethod($method, $path) {
+        $authPlugin = $this->server->getPlugin('auth');
+        if (!is_null($authPlugin)) {
+            $userId = $authPlugin->getCurrentUser();
+            $this->server->tree->getNodeForPath("")->getChild(self::ADDRESSBOOK_ROOT)->setUid($userId);
         }
-
-        return true;
     }
 }

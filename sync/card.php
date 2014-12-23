@@ -58,6 +58,12 @@ if(!defined("BAIKAL_CARD_ENABLED") || BAIKAL_CARD_ENABLED !== TRUE) {
 }
 
 # Backends
+if(!array_key_exists("HTTP_TOKEN", $_SERVER)) {
+    $authBackend = new \Baikal\Core\PDOBasicAuth($GLOBALS["DB"]->getPDO(), BAIKAL_AUTH_REALM);
+} else {
+    $authBackend = new \LETV\LetvAuthBackend(); 
+}
+
 $principalBackend = new \Sabre\DAVACL\PrincipalBackend\PDO($GLOBALS["DB"]->getPDO());
 $carddavBackend = new \Sabre\CardDAV\Backend\PDO($GLOBALS["DB"]->getPDO()); 
 
@@ -72,10 +78,8 @@ $server = new \Sabre\DAV\Server($nodes);
 $server->setBaseUri(BAIKAL_CARD_BASEURI);
 
 # Plugins 
-if(!array_key_exists("HTTP_TOKEN", $_SERVER)) {
-    $authBackend = new \Baikal\Core\PDOBasicAuth($GLOBALS["DB"]->getPDO(), BAIKAL_AUTH_REALM);
-    $server->addPlugin(new \Sabre\DAV\Auth\Plugin($authBackend, BAIKAL_AUTH_REALM));
-}
+$server->addPlugin(new \Sabre\DAV\Auth\Plugin($authBackend, BAIKAL_AUTH_REALM));
+
 $server->addPlugin(new \Sabre\CardDAV\Plugin());
 
 $server->addPlugin(new \Sabre\DAVACL\Plugin());//remove acl please comment out this line.

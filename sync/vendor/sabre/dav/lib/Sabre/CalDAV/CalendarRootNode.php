@@ -22,8 +22,6 @@ class CalendarRootNode extends \Sabre\DAVACL\AbstractPrincipalCollection {
      * @var Sabre\CalDAV\Backend\BackendInterface
      */
     protected $caldavBackend;
-    
-    protected $uid;
 
     /**
      * Constructor
@@ -43,7 +41,7 @@ class CalendarRootNode extends \Sabre\DAVACL\AbstractPrincipalCollection {
 
         parent::__construct($principalBackend, $principalPrefix);
         $this->caldavBackend = $caldavBackend;
-        $this->uid = $uid;
+        $this->uid = null;
 
     }
 

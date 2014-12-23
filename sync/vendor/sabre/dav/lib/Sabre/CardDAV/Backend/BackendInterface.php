@@ -57,7 +57,7 @@ interface BackendInterface {
      * @param array $properties
      * @return void
      */
-    public function createAddressBook($principalUri, $url, array $properties);
+    public function createAddressBook($principalUri, $url, array $properties, $uid);
 
     /**
      * Deletes an entire addressbook and all its contents

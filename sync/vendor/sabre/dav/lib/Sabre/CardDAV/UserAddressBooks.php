@@ -153,7 +153,7 @@ class UserAddressBooks extends DAV\Collection implements DAV\IExtendedCollection
         if(empty($addressbooks)){
             $descriptionPop = array(
                 '{' . Plugin::NS_CARDDAV . '}addressbook-description'   =>  'Default Address Book for '.$this->getName());
-            $this->carddavBackend->createAddressBook($this->principalUri, self::$defaultUri, array_merge(self::$defaultProps, $descriptionPop));
+            $this->carddavBackend->createAddressBook($this->principalUri, self::$defaultUri, array_merge(self::$defaultProps, $descriptionPop), $this->uid);
 
             $addressbooks = $this->carddavBackend->getAddressbooksForUser($this->principalUri);
         }

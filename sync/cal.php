@@ -53,10 +53,6 @@ $GLOBALS['LOG'] = array(
 		),
 );
 
-LETV\CLog\CLog::notice("----aaaaaaaaaaaaa-----");
-//$body = file_get_contents('php://input');
-LETV\CLog\CLog::notice("----bbbbbbbbbbbb-----");
-
 # Bootstraping Flake
 \Flake\Framework::bootstrap();
 # Bootstrapping Baïkal
@@ -66,6 +62,12 @@ if(!defined("BAIKAL_CAL_ENABLED") || BAIKAL_CAL_ENABLED !== TRUE) {
 	throw new ErrorException("Baikal CalDAV is disabled.", 0, 255, __FILE__, __LINE__);
 }
 # Backends
+if(!array_key_exists("HTTP_TOKEN", $_SERVER)) {
+    $authBackend = new \Baikal\Core\PDOBasicAuth($GLOBALS["DB"]->getPDO(), BAIKAL_AUTH_REALM);
+} else {
+    $authBackend = new \LETV\LetvAuthBackend(); 
+}
+
 $principalBackend = new \Sabre\DAVACL\PrincipalBackend\PDO($GLOBALS["DB"]->getPDO());
 $calendarBackend = new \Sabre\CalDAV\Backend\PDO($GLOBALS["DB"]->getPDO());
 
@@ -80,9 +82,7 @@ $server = new \Sabre\DAV\Server($nodes);
 $server->setBaseUri(BAIKAL_CAL_BASEURI);
 
 # Server Plugins
-if(!array_key_exists("HTTP_TOKEN", $_SERVER)) {
-    $authBackend = new \Baikal\Core\PDOBasicAuth($GLOBALS["DB"]->getPDO(), BAIKAL_AUTH_REALM);
-    $server->addPlugin(new \Sabre\DAV\Auth\Plugin($authBackend, BAIKAL_AUTH_REALM));
+$server->addPlugin(new \Sabre\DAV\Auth\Plugin($authBackend, BAIKAL_AUTH_REALM));
 }
 $server->addPlugin(new \Sabre\DAVACL\Plugin());
 $server->addPlugin(new \Sabre\CalDAV\Plugin());

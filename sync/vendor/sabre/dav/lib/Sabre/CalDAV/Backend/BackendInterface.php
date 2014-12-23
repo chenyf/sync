@@ -41,7 +41,7 @@ interface BackendInterface {
      * @param array $properties
      * @return void
      */
-    public function createCalendar($principalUri,$calendarUri,array $properties);
+    public function createCalendar($principalUri,$calendarUri,array $properties, $uid);
 
     /**
      * Updates properties for a calendar.

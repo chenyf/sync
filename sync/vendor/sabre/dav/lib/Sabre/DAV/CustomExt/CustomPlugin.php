@@ -26,6 +26,10 @@ class CustomPlugin extends DAV\ServerPlugin {
         
         $token = $this->server->httpRequest->getHeader("token");
 
+        if (!$token) {
+            throw new DAV\Exception\NotAuthenticated('no token was found in headers');
+        }
+
         $r = DAV\CurlUtil::get("http://api.sso.letv.com/api/checkTicket/tk/".$token);
         if ($r) {
             $result = json_decode($r, $assoc = true);
@@ -38,8 +42,6 @@ class CustomPlugin extends DAV\ServerPlugin {
         } else {
             throw new DAV\Exception\NotAuthenticated('failed to check token');
         }
-
-        return true;
 
     }
 

@@ -752,20 +752,10 @@ class Plugin extends DAV\ServerPlugin {
      * @return void
      */
     public function beforeMethod($method, $path) {
-        
-        $token = $this->server->httpRequest->getHeader("token");
-        
-        $r = DAV\CurlUtil::get("http://api.sso.letv.com/api/checkTicket/tk/".$token);
-        if ($r) {
-            $result = json_decode($r, $assoc = true);
-            if ($result["status"] == 1) {
-                $uid = $result["bean"]["result"];
-                $this->server->tree->getNodeForPath("")->setUid($uid);
-            } else {
-                throw new DAV\Exception\NotAuthenticated('make sure user has logined');
-            }
-        } else {
-            throw new DAV\Exception\NotAuthenticated('failed to check token');
+        $authPlugin = $this->server->getPlugin('auth');
+        if (!is_null($authPlugin)) {
+            $userId = $authPlugin->getCurrentUser();
+            $this->server->tree->getNodeForPath("")->getChild(self::CALENDAR_ROOT)->setUid($userId);
         }
 
         if ($method!=='GET') return;
