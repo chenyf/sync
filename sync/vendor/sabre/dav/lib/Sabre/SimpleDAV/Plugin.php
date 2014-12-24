@@ -20,6 +20,10 @@ class Plugin extends DAV\ServerPlugin {
 
     public function beforeMethod($method, $uri) { 
         $token = $this->server->httpRequest->getHeader("token");
+        if (!$token) {
+            throw new DAV\Exception\NotAuthenticated('no token was found in headers');
+        }
+
         $r = DAV\CurlUtil::get("http://api.sso.letv.com/api/checkTicket/tk/".$token);
         if ($r) {
             $result = json_decode($r, $assoc = true);
