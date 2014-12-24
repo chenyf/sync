@@ -1,13 +1,13 @@
 <?php
 
-namespace Sabre\DAV\CustomExt\BookmarkExt;
+namespace Sabre\SimpleDAV\Bookmark;
 
 use Sabre\DAV;
 
 class BookmarkItem extends DAV\Node implements DAV\IFile {
 
     public function __construct(array $ctx) {
-        $this->bookmarkBackend = $ctx["bookmarkBackend"];
+        $this->backend = $ctx["backend"];
         $this->bookid = $ctx["bookid"];
         $this->name = $ctx["name"];
     }
@@ -20,23 +20,20 @@ class BookmarkItem extends DAV\Node implements DAV\IFile {
         if (is_resource($data)) {
             $data = stream_get_contents($data); 
         }
-               
-        return $this->bookmarkBackend->updateBookmarkItem($this->bookid, $this->getName(), $data); 
+        return $this->backend->updateBookmarkItem($this->bookid, $this->name, $data); 
     }
 
     public function get() {
-        $result = $this->bookmarkBackend->getBookmarkItem($this->bookid, $this->getName());
+        $result = $this->backend->getBookmarkItem($this->bookid, $this->name);
         return $result["data"];
     }
 
     public function delete() {
-        $this->bookmarkBackend->removeBookmarkItem($this->bookid, $this->getName()); 
+        $this->backend->removeBookmarkItem($this->bookid, $this->name); 
     }
 
     public function getSize() {
-
         return null;
-
     }
 
     public function getETag() {
@@ -49,10 +46,7 @@ class BookmarkItem extends DAV\Node implements DAV\IFile {
     }
 
     public function getContentType() {
-
         return null;
-
     }
-
 }
 

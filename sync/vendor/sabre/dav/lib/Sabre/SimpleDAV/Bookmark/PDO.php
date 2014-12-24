@@ -1,8 +1,8 @@
 <?php
 
-namespace Sabre\DAV\CustomExt\BookmarkExt;
+namespace Sabre\SimpleDAV\Bookmark;
 
-use Sabre\DAV\CustomExt\Backend;
+use Sabre\SimpleDAV\Backend;
 
 class PDO extends Backend\AbstractBackend {
 
@@ -31,11 +31,9 @@ class PDO extends Backend\AbstractBackend {
      * @param string $bookmarkItemTableName
      */
     public function __construct(\PDO $pdo, $bookmarksTableName = 'Bookmarks', $bookmarkItemTableName = 'BookmarkItem') {
-
         $this->pdo = $pdo;
         $this->bookmarksTableName = $bookmarksTableName;
         $this->bookmarkItemTableName = $bookmarkItemTableName;
-
     }
 
     public function getBookmark($uid) {
@@ -107,5 +105,5 @@ class PDO extends Backend\AbstractBackend {
         $stmt = $this->pdo->prepare('DELETE FROM '.$this->bookmarkItemTableName.' WHERE uri = :uri and bookid = :bookid');
         $stmt->execute($values);
     }
-
 }
+

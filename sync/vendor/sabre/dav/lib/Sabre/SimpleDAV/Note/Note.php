@@ -1,26 +1,26 @@
 <?php
 
-namespace Sabre\DAV\CustomExt\NoteExt;
+namespace Sabre\SimpleDAV\Note;
 
-use Sabre\DAV\CustomExt\Backend;
 use Sabre\DAV;
+use Sabre\SimpleDAV\Backend;
 
 class Note extends DAV\Node implements DAV\ICollection {
 
-    protected $noteBackend;
+    protected $backend;
     protected $noteid;
 
-    public function __construct(Backend\BackendInterface $noteBackend) {
-        $this->noteBackend = $noteBackend;
+    public function __construct(Backend\BackendInterface $backend) {
+        $this->backend = $backend;
         $this->noteid = null;
     }
     
     public function setRootNodeAttr($uid) {
-        $note = $this->noteBackend->getNote($uid);
+        $note = $this->backend->getNote($uid);
         if ($note) {
             $this->noteid = $note["id"];
         } else {
-            $this->noteid = $this->noteBackend->createNote($uid); 
+            $this->noteid = $this->backend->createNote($uid); 
         }
     }
 
@@ -32,7 +32,7 @@ class Note extends DAV\Node implements DAV\ICollection {
         if (is_resource($data)) {
             $data = stream_get_contents($data); 
         }
-        return $this->noteBackend->createNoteItem($this->noteid, $name, $data);
+        return $this->backend->createNoteItem($this->noteid, $name, $data);
     }
 
     public function createDirectory($name) {
@@ -40,9 +40,9 @@ class Note extends DAV\Node implements DAV\ICollection {
     }
 
     public function getChild($name) {
-        $data = $this->noteBackend->getNoteItem($this->noteid, $name);
+        $data = $this->backend->getNoteItem($this->noteid, $name);
         return new NoteItem(array(
-            "noteBackend" => $this->noteBackend, 
+            "backend" => $this->backend, 
             "noteid" => $this->noteid,            
             "name" => $data["uri"],
         ));
@@ -51,9 +51,9 @@ class Note extends DAV\Node implements DAV\ICollection {
     public function getChildren() {
 
         $nodes = array();
-        foreach($this->noteBackend->getNoteItems($this->noteid) as $data) {
+        foreach($this->backend->getNoteItems($this->noteid) as $data) {
             $nodes[] = new NoteItem(array(
-                "noteBackend" => $this->noteBackend, 
+                "backend" => $this->backend, 
                 "noteid" => $this->noteid,
                 "name" => $data["uri"],
             ));
@@ -63,7 +63,7 @@ class Note extends DAV\Node implements DAV\ICollection {
     }
 
     public function childExists($name) {
-        if ($this->noteBackend->getNoteItem($this->noteid, $name) === false)
+        if ($this->backend->getNoteItem($this->noteid, $name) === false)
             return false;
         return true;
     }
@@ -71,5 +71,4 @@ class Note extends DAV\Node implements DAV\ICollection {
     public function delete() {
         throw new DAV\Exception\MethodNotAllowed('delete collection is not yet supported');
     }
-
 }
