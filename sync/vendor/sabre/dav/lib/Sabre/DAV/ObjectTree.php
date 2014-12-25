@@ -47,6 +47,7 @@ class ObjectTree extends Tree {
      * @return INode
      */
     public function getNodeForPath($path) {
+        $this->cache = array();
 
         $path = trim($path,'/');
         if (isset($this->cache[$path])) {
