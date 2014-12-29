@@ -43,10 +43,7 @@ if(!file_exists(PROJECT_PATH_ROOT . 'vendor/')) {
 require PROJECT_PATH_ROOT . 'vendor/autoload.php';
 $GLOBALS['LOG'] = array(
                 'intLevel'   => 7,      //notice, warning, fatal
-                'strLogFile' => '/letv/log/card.log',
-                'arrSelfLogFiles' => array(
-                                'cal'       => '/letv/log/card.sdf.log',
-                ),
+                'strLogFile' => '/letv/logs/sync/card.log',
 );
 # Bootstraping Flake
 \Flake\Framework::bootstrap();

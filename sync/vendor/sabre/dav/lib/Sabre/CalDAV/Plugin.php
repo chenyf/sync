@@ -752,11 +752,18 @@ class Plugin extends DAV\ServerPlugin {
      * @return void
      */
     public function beforeMethod($method, $path) {
+        $userId = null;
         $authPlugin = $this->server->getPlugin('auth');
         if (!is_null($authPlugin)) {
             $userId = $authPlugin->getCurrentUser();
             $this->server->tree->getNodeForPath("")->getChild(self::CALENDAR_ROOT)->setUid($userId);
         }
+
+        $this->prepPushData(array(
+            "userid" => $userId,
+            "regid" => $this->server->httpRequest->getHeader("regid"),
+        ));
+
 
         if ($method!=='GET') return;
 
@@ -1338,6 +1345,29 @@ class Plugin extends DAV\ServerPlugin {
         $this->server->createCollection($uri . '/' . $postVars['name'],$resourceType,$properties);
         return false;
 
+    }
+
+    public function prepPushData($data = array()) {
+        if (SYNC_PUSH_CAL_ENABLE) { 
+            $this->pushData = array_merge($data, array(
+                "sendid" => SYNC_PUSH_CAL_SENDID,
+            ));
+        }
+    }
+
+    public function syncPush() {
+        if (SYNC_PUSH_CAL_ENABLE) {
+            $r = DAV\PushUtil::syncPush($this->pushData);
+            if (!$r) {
+                \LETV\CLog\CLog::warning("failed to sync data with push service");
+            } 
+        }
+    }
+
+    public function afterMethod($method) {
+        if ($method == "PUT" || $method == "DELETE") {
+            $this->syncPush();
+        }   
     }
 
 }

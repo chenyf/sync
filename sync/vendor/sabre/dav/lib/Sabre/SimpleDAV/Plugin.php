@@ -18,12 +18,17 @@ class Plugin extends DAV\ServerPlugin {
         $this->server->subscribeEvent('report',array($this, 'report'));
     }
 
+    public function prepPushData($data = array()) {}
+
+    public function syncPush() {}
+
     public function beforeMethod($method, $uri) { 
         $token = $this->server->httpRequest->getHeader("token");
         if (!$token) {
             throw new DAV\Exception\NotAuthenticated('no token was found in headers');
         }
 
+        $uid = null;
         $r = DAV\CurlUtil::get("http://api.sso.letv.com/api/checkTicket/tk/".$token);
         if ($r) {
             $result = json_decode($r, $assoc = true);
@@ -36,7 +41,11 @@ class Plugin extends DAV\ServerPlugin {
         } else {
             throw new DAV\Exception\NotAuthenticated('failed to check token');
         }
-        return true;
+        
+        $this->prepPushData(array(
+            "userid" => $uid,
+            "regid" => $this->server->httpRequest->getHeader("regid"),
+        )); 
     }
 
     public function report($reportName, $dom, $uri) {
@@ -59,5 +68,11 @@ class Plugin extends DAV\ServerPlugin {
             return false;
         }
         return true;
+    }
+    
+    public function afterMethod($method) {
+        if ($method == "PUT" || $method == "DELETE") {
+            $this->syncPush();
+        }   
     }
 }

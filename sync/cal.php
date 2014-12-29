@@ -47,10 +47,7 @@ require PROJECT_PATH_ROOT . 'vendor/autoload.php';
 
 $GLOBALS['LOG'] = array(
 		'intLevel'   => 7,	//notice, warning, fatal
-		'strLogFile' => '/letv/log/cal.log',
-		'arrSelfLogFiles' => array(
-				'cal'       => '/letv/log/cal.sdf.log',
-		),
+		'strLogFile' => '/letv/logs/sync/cal.log',
 );
 
 # Bootstraping Flake
