@@ -80,7 +80,6 @@ $server->setBaseUri(BAIKAL_CAL_BASEURI);
 
 # Server Plugins
 $server->addPlugin(new \Sabre\DAV\Auth\Plugin($authBackend, BAIKAL_AUTH_REALM));
-}
 $server->addPlugin(new \Sabre\DAVACL\Plugin());
 $server->addPlugin(new \Sabre\CalDAV\Plugin());
 # And off we go!
