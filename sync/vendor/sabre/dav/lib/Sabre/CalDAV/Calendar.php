@@ -201,8 +201,6 @@ class Calendar implements ICalendar, DAV\IProperties, DAVACL\IACL {
      */
     public function delete() {
 	
-	file_put_contents("/letv/logs/baikal.log", "enter delete\n"); 
-	file_put_contents("/letv/logs/baikal.log", print_r(debug_backtrace(), TRUE)."\n", FILE_APPEND);
         $this->caldavBackend->deleteCalendar($this->calendarInfo['id']);
 
     }

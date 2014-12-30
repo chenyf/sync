@@ -56,28 +56,28 @@ define("PROJECT_SQLITE_FILE", PROJECT_PATH_SPECIFIC . "db/db.sqlite");
 define("PROJECT_DB_MYSQL", TRUE);
 
 # MySQL > Host, including ':portnumber' if port is not the default one (3306)
-define("PROJECT_DB_MYSQL_HOST", '10.154.156.123');
+define("PROJECT_DB_MYSQL_HOST", '127.0.0.1');
 
 # MySQL > Database name
 define("PROJECT_DB_MYSQL_DBNAME", 'sync');
 
 # MySQL > Username
-define("PROJECT_DB_MYSQL_USERNAME", 'baikal');
+define("PROJECT_DB_MYSQL_USERNAME", '*');
 
 # MySQL > Password
-define("PROJECT_DB_MYSQL_PASSWORD", 'carddav');
+define("PROJECT_DB_MYSQL_PASSWORD", '*');
 
 # MySQL > Host, including ':portnumber' if port is not the default one (3306)
-define("PROJECT_DB_MYSQL_SYNC_HOST", '10.154.156.123');
+define("PROJECT_DB_MYSQL_SYNC_HOST", '127.0.0.1');
 
 # MySQL > Database name
 define("PROJECT_DB_MYSQL_SYNC_DBNAME", 'sync');
 
 # MySQL > Username
-define("PROJECT_DB_MYSQL_SYNC_USERNAME", 'baikal');
+define("PROJECT_DB_MYSQL_SYNC_USERNAME", '*');
 
 # MySQL > Password
-define("PROJECT_DB_MYSQL_SYNC_PASSWORD", 'carddav');
+define("PROJECT_DB_MYSQL_SYNC_PASSWORD", '*');
 
 # A random 32 bytes key that will be used to encrypt data
 define("BAIKAL_ENCRYPTION_KEY", '4be738c7f6425103ead63fc5fce853f4');

@@ -4,6 +4,7 @@ namespace Sabre\SimpleDAV\Note;
 
 use Sabre\DAV;
 use Sabre\SimpleDAV;
+use LETV\CLog;
 
 class Plugin extends SimpleDAV\Plugin {
 
@@ -19,7 +20,9 @@ class Plugin extends SimpleDAV\Plugin {
         if (SYNC_PUSH_NOTE_ENABLE) {
             $r = DAV\PushUtil::syncPush($this->pushData);
             if (!$r) {
-                \LETV\CLog\CLog::warning("failed to sync data with push service");
+                CLog\CLog::warning("failed to sync data with push service. request: ".json_encode($this->pushData));
+            } else {
+                CLog\CLog::notice("request: ".json_encode($this->pushData)." response: ".$r);
             }
         }
     }

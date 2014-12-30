@@ -16,6 +16,7 @@ class Plugin extends DAV\ServerPlugin {
         $this->server = $server;
         $this->server->subscribeEvent('beforeMethod',array($this, 'beforeMethod'));
         $this->server->subscribeEvent('report',array($this, 'report'));
+        $this->server->subscribeEvent('afterMethod',array($this, 'afterMethod'));
     }
 
     public function prepPushData($data = array()) {}
@@ -43,9 +44,9 @@ class Plugin extends DAV\ServerPlugin {
         }
         
         $this->prepPushData(array(
-            "userid" => $uid,
+            "uid" => $uid,
             "regid" => $this->server->httpRequest->getHeader("regid"),
-        )); 
+        ));
     }
 
     public function report($reportName, $dom, $uri) {

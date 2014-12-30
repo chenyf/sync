@@ -44,6 +44,7 @@ require PROJECT_PATH_ROOT . 'vendor/autoload.php';
 $GLOBALS['LOG'] = array(
                 'intLevel'   => 7,      //notice, warning, fatal
                 'strLogFile' => '/letv/logs/sync/card.log',
+                'arrSelfLogFiles' => array(),
 );
 # Bootstraping Flake
 \Flake\Framework::bootstrap();

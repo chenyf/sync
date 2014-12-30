@@ -90,7 +90,6 @@ class CalendarObject extends \Sabre\DAV\File implements ICalendarObject, \Sabre\
      */
     public function put($calendarData) {
 
-        file_put_contents("/letv/logs/baikal.log", print_r(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), TRUE)."\n", FILE_APPEND);
         if (is_resource($calendarData)) {
             $calendarData = stream_get_contents($calendarData);
         }
@@ -109,7 +108,6 @@ class CalendarObject extends \Sabre\DAV\File implements ICalendarObject, \Sabre\
      */
     public function delete() {
 
-        file_put_contents("/letv/logs/baikal.log", print_r(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), TRUE)."\n", FILE_APPEND);
         $this->caldavBackend->deleteCalendarObject($this->calendarInfo['id'],$this->objectData['uri']);
 
     }

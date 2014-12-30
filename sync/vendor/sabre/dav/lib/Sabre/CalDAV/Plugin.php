@@ -5,7 +5,7 @@ namespace Sabre\CalDAV;
 use Sabre\DAV;
 use Sabre\DAVACL;
 use Sabre\VObject;
-
+use LETV\CLog;
 /**
  * CalDAV plugin
  *
@@ -167,6 +167,7 @@ class Plugin extends DAV\ServerPlugin {
         $server->subscribeEvent('beforeWriteContent', array($this, 'beforeWriteContent'));
         $server->subscribeEvent('beforeCreateFile', array($this, 'beforeCreateFile'));
         $server->subscribeEvent('beforeMethod', array($this,'beforeMethod'));
+        $server->subscribeEvent('afterMethod', array($this,'afterMethod'));
 
         $server->xmlNamespaces[self::NS_CALDAV] = 'cal';
         $server->xmlNamespaces[self::NS_CALENDARSERVER] = 'cs';
@@ -760,7 +761,7 @@ class Plugin extends DAV\ServerPlugin {
         }
 
         $this->prepPushData(array(
-            "userid" => $userId,
+            "uid" => $userId,
             "regid" => $this->server->httpRequest->getHeader("regid"),
         ));
 
@@ -1359,7 +1360,9 @@ class Plugin extends DAV\ServerPlugin {
         if (SYNC_PUSH_CAL_ENABLE) {
             $r = DAV\PushUtil::syncPush($this->pushData);
             if (!$r) {
-                \LETV\CLog\CLog::warning("failed to sync data with push service");
+                CLog\CLog::warning("failed to sync data with push service. request: ".json_encode($this->pushData));
+            } else {
+                CLog\CLog::notice("request: ".json_encode($this->pushData)." response: ".$r);
             } 
         }
     }

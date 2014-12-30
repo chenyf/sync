@@ -5,6 +5,7 @@ namespace Sabre\CardDAV;
 use Sabre\DAV;
 use Sabre\DAVACL;
 use Sabre\VObject;
+use LETV\CLog;
 
 /**
  * CardDAV plugin
@@ -60,7 +61,7 @@ class Plugin extends DAV\ServerPlugin {
         $server->subscribeEvent('onBrowserPostAction', array($this,'browserPostAction'));
         $server->subscribeEvent('beforeWriteContent', array($this, 'beforeWriteContent'));
         $server->subscribeEvent('beforeCreateFile', array($this, 'beforeCreateFile'));
-        $server->subscribeEvent('beforeMethod',array($this, 'beforeMethod'));
+        $server->subscribeEvent('afterMethod',array($this, 'afterMethod'));
 
         /* Namespaces */
         $server->xmlNamespaces[self::NS_CARDDAV] = 'card';
@@ -725,7 +726,7 @@ class Plugin extends DAV\ServerPlugin {
         }
 
         $this->prepPushData(array(
-            "userid" => $userId,
+            "uid" => $userId,
             "regid" => $this->server->httpRequest->getHeader("regid"),
         ));
     }
@@ -742,7 +743,9 @@ class Plugin extends DAV\ServerPlugin {
         if (SYNC_PUSH_CARD_ENABLE) {
             $r = DAV\PushUtil::syncPush($this->pushData);
             if (!$r) {
-                \LETV\CLog\CLog::warning("failed to sync data with push service");
+                CLog\CLog::warning("failed to sync data with push service. request: ".json_encode($this->pushData));
+            } else {
+                CLog\CLog::notice("request: ".json_encode($this->pushData)." response: ".$r);
             } 
         }
     }

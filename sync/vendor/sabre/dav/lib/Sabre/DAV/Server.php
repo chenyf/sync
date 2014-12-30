@@ -473,7 +473,7 @@ class Server {
             }
 
         }
-        $this->broadcastEvent('afterMethod',array());
+        $this->broadcastEvent('afterMethod',array($method));
 
     }
 
