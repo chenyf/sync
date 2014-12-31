@@ -80,7 +80,11 @@ class PDO extends Backend\AbstractBackend {
 
         $stmt = $this->pdo->prepare('INSERT INTO '.$this->noteItemTableName.' SET uri = :uri, noteid = :noteid, iscol = :iscol, name = :name, data = :data, createTime = now(), updateTime = now()');
         $stmt->execute($values);
-        return $this->pdo->lastInsertId();
+        if (is_string($data)) {
+            return 'W/"'.md5($data).'"';
+        } else {
+            return null;
+        }
     }
 
     public function updateNoteItem($noteid, $uri, $data) {
@@ -94,7 +98,11 @@ class PDO extends Backend\AbstractBackend {
         );
         $stmt = $this->pdo->prepare('UPDATE '.$this->noteItemTableName.' SET data = :data, createTime = now(), updateTime = now() where uri = :uri and noteid = :noteid');
         $stmt->execute($values);
-        return strlen($data); 
+        if (is_string($data)) {
+            return 'W/"'.md5($data).'"';
+        } else {
+            return null;
+        }
     }
 
     public function removeNoteItem($noteid, $uri) {

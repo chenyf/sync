@@ -5,6 +5,7 @@ namespace Sabre\CardDAV;
 use Sabre\DAV;
 use Sabre\DAVACL;
 use Sabre\VObject;
+use LETV\CLog;
 
 /**
  * CardDAV plugin
@@ -51,6 +52,7 @@ class Plugin extends DAV\ServerPlugin {
     public function initialize(DAV\Server $server) {
 
         /* Events */
+        $server->subscribeEvent('beforeMethod', array($this,'beforeMethod'));
         $server->subscribeEvent('beforeGetProperties', array($this, 'beforeGetProperties'));
         $server->subscribeEvent('afterGetProperties',  array($this, 'afterGetProperties'));
         $server->subscribeEvent('updateProperties', array($this, 'updateProperties'));
@@ -59,7 +61,7 @@ class Plugin extends DAV\ServerPlugin {
         $server->subscribeEvent('onBrowserPostAction', array($this,'browserPostAction'));
         $server->subscribeEvent('beforeWriteContent', array($this, 'beforeWriteContent'));
         $server->subscribeEvent('beforeCreateFile', array($this, 'beforeCreateFile'));
-        $server->subscribeEvent('beforeMethod',array($this, 'beforeMethod'));
+        $server->subscribeEvent('afterMethod',array($this, 'afterMethod'));
 
         /* Namespaces */
         $server->xmlNamespaces[self::NS_CARDDAV] = 'card';
@@ -715,23 +717,42 @@ class Plugin extends DAV\ServerPlugin {
 
     }
 
-    public function beforeMethod($method, $uri) {
-
-        $token = $this->server->httpRequest->getHeader("token");
-        
-        $r = DAV\CurlUtil::get("http://api.sso.letv.com/api/checkTicket/tk/".$token);
-        if ($r) {
-            $result = json_decode($r, $assoc = true);
-            if ($result["status"] == 1) {
-                $uid = $result["bean"]["result"];
-                $this->server->tree->getNodeForPath("")->setUid($uid);
-            } else {
-                throw new DAV\Exception\NotAuthenticated('make sure user has logined');
-            }
-        } else {
-            throw new DAV\Exception\NotAuthenticated('failed to check token');
+    public function beforeMethod($method, $path) {
+        $userId = null;
+        $authPlugin = $this->server->getPlugin('auth');
+        if (!is_null($authPlugin)) {
+            $userId = $authPlugin->getCurrentUser();
+            $this->server->tree->getNodeForPath("")->getChild(self::ADDRESSBOOK_ROOT)->setUid($userId);
         }
 
-        return true;
+        $this->prepPushData(array(
+            "uid" => $userId,
+            "regid" => $this->server->httpRequest->getHeader("regid"),
+        ));
+    }
+
+    public function prepPushData($data = array()) {
+        if (SYNC_PUSH_CARD_ENABLE) { 
+            $this->pushData = array_merge($data, array(
+                "sendid" => SYNC_PUSH_CARD_SENDID,
+            ));
+        }
+    }
+
+    public function syncPush() {
+        if (SYNC_PUSH_CARD_ENABLE) {
+            $r = DAV\PushUtil::syncPush($this->pushData);
+            if (!$r) {
+                CLog\CLog::warning("failed to sync data with push service. request: ".json_encode($this->pushData));
+            } else {
+                CLog\CLog::notice("request: ".json_encode($this->pushData)." response: ".$r);
+            } 
+        }
+    }
+
+    public function afterMethod($method) {
+        if ($method == "PUT" || $method == "DELETE") {
+            $this->syncPush();
+        }   
     }
 }

@@ -465,8 +465,6 @@ class Server {
         );
 		
         if (in_array($method,$internalMethods)) {
-	    file_put_contents("/letv/logs/baikal.log", 'http'.$method."\r\n", FILE_APPEND);
-	    file_put_contents("/letv/logs/baikal.log", $uri."\r\n", FILE_APPEND);
             call_user_func(array($this,'http' . $method), $uri);
         } else {
             if ($this->broadcastEvent('unknownMethod',array($method, $uri))) {
@@ -475,7 +473,7 @@ class Server {
             }
 
         }
-        $this->broadcastEvent('afterMethod',array());
+        $this->broadcastEvent('afterMethod',array($method));
 
     }
 

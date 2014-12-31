@@ -80,7 +80,11 @@ class PDO extends Backend\AbstractBackend {
 
         $stmt = $this->pdo->prepare('INSERT INTO '.$this->bookmarkItemTableName.' SET uri = :uri, bookid = :bookid, iscol = :iscol, name = :name, data = :data, createTime = now(), updateTime = now()');
         $stmt->execute($values);
-        return $this->pdo->lastInsertId();
+        if (is_string($data)) {
+            return 'W/"'.md5($data).'"';
+        } else {
+            return null;
+        }
     }
 
     public function updateBookmarkItem($bookid, $uri, $data) {
@@ -94,7 +98,11 @@ class PDO extends Backend\AbstractBackend {
         );
         $stmt = $this->pdo->prepare('UPDATE '.$this->bookmarkItemTableName.' SET data = :data, createTime = now(), updateTime = now() where uri = :uri and bookid = :bookid');
         $stmt->execute($values);
-        return strlen($data); 
+        if (is_string($data)) {
+            return 'W/"'.md5($data).'"';
+        } else {
+            return null;
+        }
     }
 
     public function removeBookmarkItem($bookid, $uri) {

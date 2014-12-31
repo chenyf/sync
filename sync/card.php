@@ -43,10 +43,8 @@ if(!file_exists(PROJECT_PATH_ROOT . 'vendor/')) {
 require PROJECT_PATH_ROOT . 'vendor/autoload.php';
 $GLOBALS['LOG'] = array(
                 'intLevel'   => 7,      //notice, warning, fatal
-                'strLogFile' => '/letv/log/card.log',
-                'arrSelfLogFiles' => array(
-                                'cal'       => '/letv/log/card.sdf.log',
-                ),
+                'strLogFile' => '/letv/logs/sync/card.log',
+                'arrSelfLogFiles' => array(),
 );
 # Bootstraping Flake
 \Flake\Framework::bootstrap();
@@ -58,6 +56,12 @@ if(!defined("BAIKAL_CARD_ENABLED") || BAIKAL_CARD_ENABLED !== TRUE) {
 }
 
 # Backends
+if(!array_key_exists("HTTP_TOKEN", $_SERVER)) {
+    $authBackend = new \Baikal\Core\PDOBasicAuth($GLOBALS["DB"]->getPDO(), BAIKAL_AUTH_REALM);
+} else {
+    $authBackend = new \LETV\LetvAuthBackend(); 
+}
+
 $principalBackend = new \Sabre\DAVACL\PrincipalBackend\PDO($GLOBALS["DB"]->getPDO());
 $carddavBackend = new \Sabre\CardDAV\Backend\PDO($GLOBALS["DB"]->getPDO()); 
 
@@ -72,10 +76,8 @@ $server = new \Sabre\DAV\Server($nodes);
 $server->setBaseUri(BAIKAL_CARD_BASEURI);
 
 # Plugins 
-if(!array_key_exists("HTTP_TOKEN", $_SERVER)) {
-    $authBackend = new \Baikal\Core\PDOBasicAuth($GLOBALS["DB"]->getPDO(), BAIKAL_AUTH_REALM);
-    $server->addPlugin(new \Sabre\DAV\Auth\Plugin($authBackend, BAIKAL_AUTH_REALM));
-}
+$server->addPlugin(new \Sabre\DAV\Auth\Plugin($authBackend, BAIKAL_AUTH_REALM));
+
 $server->addPlugin(new \Sabre\CardDAV\Plugin());
 
 $server->addPlugin(new \Sabre\DAVACL\Plugin());//remove acl please comment out this line.

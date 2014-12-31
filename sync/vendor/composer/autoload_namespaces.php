@@ -12,6 +12,7 @@ return array(
     'Sabre\\DAV' => array($vendorDir . '/sabre/dav/lib'),
     'Sabre\\CardDAV' => array($vendorDir . '/sabre/dav/lib'),
     'Sabre\\CalDAV' => array($vendorDir . '/sabre/dav/lib'),
+    'Sabre\\SimpleDAV' => array($vendorDir . '/sabre/dav/lib'),
     'Formal' => array($baseDir . '/Core/Frameworks'),
     'Flake' => array($baseDir . '/Core/Frameworks'),
     'Baikal' => array($baseDir . '/Core/Frameworks'),

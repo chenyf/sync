@@ -56,31 +56,43 @@ define("PROJECT_SQLITE_FILE", PROJECT_PATH_SPECIFIC . "db/db.sqlite");
 define("PROJECT_DB_MYSQL", TRUE);
 
 # MySQL > Host, including ':portnumber' if port is not the default one (3306)
-define("PROJECT_DB_MYSQL_HOST", '10.154.156.123');
+define("PROJECT_DB_MYSQL_HOST", '127.0.0.1');
 
 # MySQL > Database name
 define("PROJECT_DB_MYSQL_DBNAME", 'sync');
 
 # MySQL > Username
-define("PROJECT_DB_MYSQL_USERNAME", 'baikal');
+define("PROJECT_DB_MYSQL_USERNAME", '*');
 
 # MySQL > Password
-define("PROJECT_DB_MYSQL_PASSWORD", 'carddav');
+define("PROJECT_DB_MYSQL_PASSWORD", '*');
 
 # MySQL > Host, including ':portnumber' if port is not the default one (3306)
-define("PROJECT_DB_MYSQL_SYNC_HOST", '10.154.156.123');
+define("PROJECT_DB_MYSQL_SYNC_HOST", '127.0.0.1');
 
 # MySQL > Database name
 define("PROJECT_DB_MYSQL_SYNC_DBNAME", 'sync');
 
 # MySQL > Username
-define("PROJECT_DB_MYSQL_SYNC_USERNAME", 'baikal');
+define("PROJECT_DB_MYSQL_SYNC_USERNAME", '*');
 
 # MySQL > Password
-define("PROJECT_DB_MYSQL_SYNC_PASSWORD", 'carddav');
+define("PROJECT_DB_MYSQL_SYNC_PASSWORD", '*');
 
 # A random 32 bytes key that will be used to encrypt data
 define("BAIKAL_ENCRYPTION_KEY", '4be738c7f6425103ead63fc5fce853f4');
 
 # The currently configured Baïkal version
 define("BAIKAL_CONFIGURED_VERSION", '0.2.7');
+
+define("SYNC_PUSH_URL", 'http://push.scloud.letv.com/sync/message');
+define("SYNC_PUSH_APPID", 'id_edd5e5960c8f4197820d0da2fdf43213');
+define("SYNC_PUSH_NOTE_ENABLE", TRUE);
+define("SYNC_PUSH_NOTE_SENDID", "note");
+define("SYNC_PUSH_BOOKMARK_ENABLE", TRUE);
+define("SYNC_PUSH_BOOKMARK_SENDID", "bookmark");
+define("SYNC_PUSH_CAL_ENABLE", TRUE);
+define("SYNC_PUSH_CAL_SENDID", "calendar");
+define("SYNC_PUSH_CARD_ENABLE", TRUE);
+define("SYNC_PUSH_CARD_SENDID", "contact");
+

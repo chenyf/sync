@@ -171,7 +171,7 @@ class UserCalendars implements DAV\IExtendedCollection, DAVACL\IACL {
         $calendars = $this->caldavBackend->getCalendarsForUser($this->principalInfo['uri']);
         $objs = array();
         if(empty($calendars)){
-            $this->caldavBackend->createCalendar($this->principalInfo['uri'], self::$defaultUri, self::$defaultProps);
+            $this->caldavBackend->createCalendar($this->principalInfo['uri'], self::$defaultUri, self::$defaultProps, $this->uid);
             $calendars = $this->caldavBackend->getCalendarsForUser($this->principalInfo['uri']);
         }
         foreach($calendars as $calendar) {
