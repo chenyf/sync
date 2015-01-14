@@ -28,7 +28,7 @@ interface BackendInterface {
      * @param string $principalUri
      * @return array
      */
-    public function getCalendarsForUser($principalUri);
+    public function getCalendarsForUser($principalUri, $uid);
 
     /**
      * Creates a new calendar for a principal.

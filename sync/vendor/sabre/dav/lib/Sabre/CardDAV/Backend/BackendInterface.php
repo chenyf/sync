@@ -34,7 +34,7 @@ interface BackendInterface {
      * @param string $principalUri
      * @return array
      */
-    public function getAddressBooksForUser($principalUri);
+    public function getAddressBooksForUser($principalUri, $uid);
 
     /**
      * Updates an addressbook's properties
