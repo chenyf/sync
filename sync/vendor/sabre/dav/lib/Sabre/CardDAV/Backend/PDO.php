@@ -54,10 +54,10 @@ class PDO extends AbstractBackend {
      * @param string $principalUri
      * @return array
      */
-    public function getAddressBooksForUser($principalUri) {
+    public function getAddressBooksForUser($principalUri, $uid) {
 
-        $stmt = $this->pdo->prepare('SELECT id, uri, displayname, principaluri, description, ctag FROM '.$this->addressBooksTableName.' WHERE principaluri = ?');
-        $stmt->execute(array($principalUri));
+        $stmt = $this->pdo->prepare('SELECT id, uri, displayname, principaluri, description, ctag FROM '.$this->addressBooksTableName.' WHERE principaluri = :principaluri and uid = :uid');
+        $stmt->execute(array("principaluri"=>$principalUri, "uid"=>$uid));
 
         $addressBooks = array();
 

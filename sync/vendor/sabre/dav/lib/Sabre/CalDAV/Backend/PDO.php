@@ -97,7 +97,7 @@ class PDO extends AbstractBackend {
      * @param string $principalUri
      * @return array
      */
-    public function getCalendarsForUser($principalUri) {
+    public function getCalendarsForUser($principalUri, $uid) {
 
         $fields = array_values($this->propertyMap);
         $fields[] = 'id';
@@ -109,8 +109,8 @@ class PDO extends AbstractBackend {
 
         // Making fields a comma-delimited list
         $fields = implode(', ', $fields);
-        $stmt = $this->pdo->prepare("SELECT " . $fields . " FROM ".$this->calendarTableName." WHERE principaluri = ? ORDER BY calendarorder ASC");
-        $stmt->execute(array($principalUri));
+        $stmt = $this->pdo->prepare("SELECT " . $fields . " FROM ".$this->calendarTableName." WHERE principaluri = :principaluri and uid = :uid ORDER BY calendarorder ASC");
+        $stmt->execute(array("principaluri" => $principalUri, "uid" => $uid));
 
         $calendars = array();
         while($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
